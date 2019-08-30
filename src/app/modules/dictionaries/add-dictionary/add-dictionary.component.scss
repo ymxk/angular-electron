@@ -1,0 +1,8 @@
+.e-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.e-container > * {
+  width: 100%;
+}

@@ -1,1 +1,110 @@
-<router-outlet></router-outlet>
+<ng-container>
+  <mat-toolbar class="example-header">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <i class="material-icons">
+        menu
+      </i>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      opened
+      class="example-sidenav"
+      [fixedInViewport]="options.value.fixed"
+      [fixedTopGap]="options.value.top"
+      [fixedBottomGap]="options.value.bottom"
+    >
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Procurement
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <button
+                class="c-m-btn"
+                mat-button
+                routerLink="/table-http-example"
+              >
+                <i class="material-icons">
+                  menu
+                </i>
+                Table Http Example
+              </button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <button class="c-m-btn" mat-button routerLink="/home">
+                <i class="material-icons">
+                  print
+                </i>
+                Print
+              </button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Procurement Contracts</mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              商品管理
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item
+              ><button class="c-m-btn" mat-button routerLink="/products">
+                <i class="material-icons">
+                  poll
+                </i>
+                商品管理
+              </button></mat-list-item
+            >
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              销售管理
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item
+              ><button class="c-m-btn" mat-button routerLink="/products">
+                <i class="material-icons">
+                  poll
+                </i>
+                订单管理
+              </button></mat-list-item
+            >
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              系统管理
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <button class="c-m-btn" mat-button routerLink="/dictionaries">
+                <i class="material-icons">
+                  poll
+                </i>
+                字典管理
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-sidenav>
+    <mat-sidenav-content class="e-content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <mat-toolbar class="example-footer">Footer</mat-toolbar>
+</ng-container>

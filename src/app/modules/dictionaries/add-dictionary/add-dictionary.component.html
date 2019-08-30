@@ -1,0 +1,113 @@
+<h1 mat-dialog-title>新增</h1>
+<form [formGroup]="applyForm">
+  <div mat-dialog-content class="e-container">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="名称"
+        [(ngModel)]="dictionary.value"
+        formControlName="value"
+        required
+      />
+      <ng-template [ngIf]="value.invalid && (value.dirty || value.touched)">
+        <mat-error *ngIf="value.errors.required">
+          请输入
+        </mat-error>
+        <mat-error *ngIf="value.errors.maxlength">
+          最多输入50字
+        </mat-error>
+      </ng-template>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="值"
+        [(ngModel)]="dictionary.label"
+        formControlName="label"
+      />
+      <ng-template [ngIf]="label.invalid && (label.dirty || label.touched)">
+        <mat-error *ngIf="label.errors.maxlength">
+          最多输入50字
+        </mat-error>
+      </ng-template>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="类型"
+        [(ngModel)]="dictionary.type"
+        formControlName="type"
+      />
+      <ng-template [ngIf]="type.invalid && (type.dirty || type.touched)">
+        <mat-error *ngIf="type.errors.maxlength">
+          最多输入50字
+        </mat-error>
+      </ng-template>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        placeholder="排序"
+        [(ngModel)]="dictionary.sort"
+        formControlName="sort"
+        min="0"
+      />
+      <ng-template [ngIf]="sort.invalid && (value.dirty || sort.touched)">
+        <mat-error *ngIf="sort.errors.min">
+          请输入大于0的数值
+        </mat-error>
+      </ng-template>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="描述"
+        [(ngModel)]="dictionary.description"
+        formControlName="description"
+      />
+      <ng-template
+        [ngIf]="
+          description.invalid && (description.dirty || description.touched)
+        "
+      >
+        <mat-error *ngIf="description.errors.maxlength">
+          最多输入50字
+        </mat-error>
+      </ng-template>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        placeholder="备注"
+        [(ngModel)]="dictionary.remarks"
+        formControlName="remarks"
+      ></textarea>
+      <ng-template
+        [ngIf]="remarks.invalid && (remarks.dirty || remarks.touched)"
+      >
+        <mat-error *ngIf="remarks.errors.maxlength">
+          最多输入50字
+        </mat-error>
+      </ng-template>
+    </mat-form-field>
+  </div>
+</form>
+<div mat-dialog-actions>
+  <button
+    *ngIf="dictionary.id; else elseBlock"
+    mat-stroked-button
+    [disabled]="!applyForm.valid"
+    (click)="onUpdate()"
+  >
+    Update
+  </button>
+  <ng-template #elseBlock>
+    <button mat-stroked-button [disabled]="!applyForm.valid" (click)="onSave()">
+      Save
+    </button>
+  </ng-template>
+  <button mat-stroked-button mat-dialog-close>
+    Cancal
+  </button>
+</div>
