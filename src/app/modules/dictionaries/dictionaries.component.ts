@@ -9,6 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { RxDictionaryDocument } from "../../services/dictionary.service";
 import { AlertComponent } from "../../components/alert/alert.component";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { NzModalService } from "ng-zorro-antd";
 /**
  */
 @Component({
@@ -26,9 +27,6 @@ export class DictionariesComponent implements AfterViewInit {
 
   toggleCollapse(): void {
     this.isCollapse = !this.isCollapse;
-    this.controlArray.forEach((c, index) => {
-      c.show = this.isCollapse ? index < 6 : true;
-    });
   }
 
   resetForm(): void {
@@ -36,27 +34,27 @@ export class DictionariesComponent implements AfterViewInit {
   }
   constructor(
     private dbService: DatabaseService,
+    private modalService: NzModalService,
     public dialog: MatDialog,
     private fb: FormBuilder
-  ) {
-    this.validateForm = this.fb.group({});
-    for (let i = 0; i < 10; i++) {
-      this.controlArray.push({ index: i, show: i < 6 });
-      this.validateForm.addControl(`field${i}`, new FormControl());
-    }
-  }
+  ) {}
 
   goAdd() {
-    this.dialog.open(AddDictionaryComponent, {
-      width: "60%"
+    this.modalService.create({
+      nzTitle: "新增",
+      nzContent: AddDictionaryComponent
     });
+    return false;
   }
 
   goUpdate(dic: RxDictionaryDocument) {
-    this.dialog.open(AddDictionaryComponent, {
-      width: "60%",
-      data: dic
+    console.log("goUpdate", dic);
+    this.modalService.create({
+      nzTitle: "更新",
+      nzContent: AddDictionaryComponent,
+      nzComponentParams: { dic: dic }
     });
+    return false;
   }
 
   onRemoveConfirm(dic: RxDictionaryDocument) {
@@ -65,6 +63,11 @@ export class DictionariesComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.onSearch();
+  }
+
+  search() {
+    console.log("search");
+    return false;
   }
 
   onSearch(sort: any = { createTime: "desc" }) {

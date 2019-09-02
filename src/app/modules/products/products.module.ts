@@ -5,9 +5,16 @@ import { CommonModule } from "@angular/common";
 import { ProductsComponent } from "./products.component";
 
 import { MaterialModule } from "../../material.module";
+import { NgZorroAntdModule } from "ng-zorro-antd";
 
 @NgModule({
   declarations: [ProductsComponent],
-  imports: [CommonModule, MaterialModule, ProductsRoutingModule, PipesModule]
+  imports: [
+    CommonModule,
+    MaterialModule,
+    ProductsRoutingModule,
+    PipesModule,
+    NgZorroAntdModule
+  ]
 })
 export class ProductsModule {}

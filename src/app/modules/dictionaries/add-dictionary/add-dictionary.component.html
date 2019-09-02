@@ -1,113 +1,139 @@
-<h1 mat-dialog-title>新增</h1>
-<form [formGroup]="applyForm">
-  <div mat-dialog-content class="e-container">
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="名称"
-        [(ngModel)]="dictionary.value"
-        formControlName="value"
-        required
-      />
-      <ng-template [ngIf]="value.invalid && (value.dirty || value.touched)">
-        <mat-error *ngIf="value.errors.required">
-          请输入
-        </mat-error>
-        <mat-error *ngIf="value.errors.maxlength">
-          最多输入50字
-        </mat-error>
-      </ng-template>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="值"
-        [(ngModel)]="dictionary.label"
-        formControlName="label"
-      />
-      <ng-template [ngIf]="label.invalid && (label.dirty || label.touched)">
-        <mat-error *ngIf="label.errors.maxlength">
-          最多输入50字
-        </mat-error>
-      </ng-template>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="类型"
-        [(ngModel)]="dictionary.type"
-        formControlName="type"
-      />
-      <ng-template [ngIf]="type.invalid && (type.dirty || type.touched)">
-        <mat-error *ngIf="type.errors.maxlength">
-          最多输入50字
-        </mat-error>
-      </ng-template>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="number"
-        placeholder="排序"
-        [(ngModel)]="dictionary.sort"
-        formControlName="sort"
-        min="0"
-      />
-      <ng-template [ngIf]="sort.invalid && (value.dirty || sort.touched)">
-        <mat-error *ngIf="sort.errors.min">
-          请输入大于0的数值
-        </mat-error>
-      </ng-template>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="描述"
-        [(ngModel)]="dictionary.description"
-        formControlName="description"
-      />
-      <ng-template
-        [ngIf]="
-          description.invalid && (description.dirty || description.touched)
-        "
+<form nz-form [nzLayout]="'horizontal'" [formGroup]="applyForm">
+  <div class="e-container">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">名称</nz-form-label>
+      <nz-form-control [nzSpan]="14" nzHasFeedback [nzErrorTip]="valueErrorTpl">
+        <input
+          nz-input
+          placeholder="名称"
+          [(ngModel)]="dictionary.value"
+          formControlName="value"
+          required
+        />
+        <ng-template #valueErrorTpl let-control>
+          <ng-container *ngIf="value.errors.required">
+            请输入
+          </ng-container>
+          <ng-container *ngIf="value.errors.maxlength">
+            最多输入50字
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">值</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="labelErrorTpl" [nzSpan]="14">
+        <input
+          nz-input
+          placeholder="值"
+          [(ngModel)]="dictionary.label"
+          formControlName="label"
+        />
+        <ng-template #labelErrorTpl let-control>
+          <ng-container *ngIf="label.errors.maxlength">
+            最多输入50字
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">类型</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl" [nzSpan]="14">
+        <input
+          nz-input
+          placeholder="类型"
+          [(ngModel)]="dictionary.type"
+          formControlName="type"
+        />
+        <ng-template #typeErrorTpl let-control>
+          <ng-container *ngIf="type.errors.maxlength">
+            最多输入50字
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">排序</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="sortErrorTpl" [nzSpan]="14">
+        <input
+          nz-input
+          type="number"
+          placeholder="排序"
+          [(ngModel)]="dictionary.sort"
+          formControlName="sort"
+          min="0"
+        />
+        <ng-template #sortErrorTpl let-control>
+          <ng-container *ngIf="sort.errors.min">
+            请输入大于0的数值
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">描述</nz-form-label>
+      <nz-form-control
+        nzHasFeedback
+        [nzErrorTip]="descriptionErrorTpl"
+        [nzSpan]="14"
       >
-        <mat-error *ngIf="description.errors.maxlength">
-          最多输入50字
-        </mat-error>
-      </ng-template>
-    </mat-form-field>
-    <mat-form-field>
-      <textarea
-        matInput
-        placeholder="备注"
-        [(ngModel)]="dictionary.remarks"
-        formControlName="remarks"
-      ></textarea>
-      <ng-template
-        [ngIf]="remarks.invalid && (remarks.dirty || remarks.touched)"
+        <input
+          nz-input
+          placeholder="描述"
+          [(ngModel)]="dictionary.description"
+          formControlName="description"
+        />
+        <ng-template #descriptionErrorTpl let-control>
+          <ng-container *ngIf="description.errors.maxlength">
+            最多输入50字
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">备注</nz-form-label>
+      <nz-form-control
+        nzHasFeedback
+        [nzErrorTip]="remarksErrorTpl"
+        [nzSpan]="14"
       >
-        <mat-error *ngIf="remarks.errors.maxlength">
-          最多输入50字
-        </mat-error>
-      </ng-template>
-    </mat-form-field>
+        <textarea
+          nz-input
+          placeholder="备注"
+          [(ngModel)]="dictionary.remarks"
+          formControlName="remarks"
+        ></textarea>
+        <ng-template #remarksErrorTpl let-control>
+          <ng-container *ngIf="remarks.errors.maxlength">
+            最多输入50字
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
   </div>
 </form>
-<div mat-dialog-actions>
-  <button
-    *ngIf="dictionary.id; else elseBlock"
-    mat-stroked-button
-    [disabled]="!applyForm.valid"
-    (click)="onUpdate()"
-  >
-    Update
-  </button>
-  <ng-template #elseBlock>
-    <button mat-stroked-button [disabled]="!applyForm.valid" (click)="onSave()">
-      Save
+<div *nzModalFooter>
+  <ng-template [ngIf]="dictionary && dictionary.id" [ngIfElse]="elseBlock">
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="!applyForm.valid"
+      (click)="onUpdate()"
+    >
+      更新
     </button>
   </ng-template>
-  <button mat-stroked-button mat-dialog-close>
-    Cancal
+  <ng-template #elseBlock>
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="!applyForm.valid"
+      (click)="onSave()"
+    >
+      保存
+    </button>
+  </ng-template>
+  <button nz-button nzType="default" (click)="destroyModal()">
+    取消
   </button>
 </div>

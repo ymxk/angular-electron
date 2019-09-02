@@ -2,26 +2,46 @@
   <div nz-row [nzGutter]="24">
     <div nz-col [nzSpan]="8">
       <nz-form-item nzFlex>
-        <nz-form-label>Field </nz-form-label>
+        <nz-form-label>名称 </nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="placeholder" />
+          <input nz-input />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>值 </nz-form-label>
+        <nz-form-control>
+          <input nz-input />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>类型 </nz-form-label>
+        <nz-form-control>
+          <input nz-input />
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24" class="search-area">
-      <button nz-button [nzType]="'primary'">Search</button>
-      <button nz-button (click)="resetForm()">Clear</button>
-      <a class="collapse" (click)="toggleCollapse()">
-        Collapse
-        <i nz-icon [nzType]="isCollapse ? 'down' : 'up'"></i>
-      </a>
+      <button nz-button nzType="primary" (click)="search()">
+        <i nz-icon nzType="search"></i>搜索
+      </button>
+      <button nz-button (click)="goAdd()">
+        <i nz-icon nzType="plus"></i>新增
+      </button>
     </div>
   </div>
 </form>
 
-<nz-table #basicTable [nzData]="dictionaries | asyncNoZone" class="search-result-list">
+<nz-table
+  #basicTable
+  [nzData]="dictionaries | asyncNoZone"
+  class="search-result-list"
+>
   <thead>
     <tr>
       <th>编号</th>
@@ -46,9 +66,9 @@
       <td>{{ data.remarks }}</td>
       <td>{{ data.createTime | date: "yyyy-MM-dd HH:mm" }}</td>
       <td>
-        <a (click)="goUpdate(row)">编辑</a>
+        <a (click)="goUpdate(data)">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="onRemoveConfirm(row)">删除</a>
+        <a (click)="onRemoveConfirm(data)">删除</a>
       </td>
     </tr>
   </tbody>

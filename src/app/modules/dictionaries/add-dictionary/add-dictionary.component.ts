@@ -1,9 +1,9 @@
 import { DatabaseService } from "./../../../services/database.service";
 import { AddDictionaryValidator } from "./add-dictionary-validtor";
-import { Component, AfterViewInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Component, AfterViewInit, Inject, Input } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { RxDictionaryDocument } from "../../../services/dictionary.service";
+import { NzModalRef } from "ng-zorro-antd";
 /**
  */
 @Component({
@@ -14,26 +14,32 @@ import { RxDictionaryDocument } from "../../../services/dictionary.service";
 export class AddDictionaryComponent extends AddDictionaryValidator
   implements AfterViewInit {
   ngAfterViewInit() {}
-  dictionary: any;
+  dictionary: any = {};
+  @Input() dic: RxDictionaryDocument;
   constructor(
-    public dialogRef: MatDialogRef<AddDictionaryComponent>,
+    private modal: NzModalRef,
     private dbService: DatabaseService,
-    fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public dicDoc: RxDictionaryDocument
+    fb: FormBuilder
   ) {
     super(fb);
     this.createFromGroup();
-    this.dictionary = dicDoc ? dicDoc.toJSON() : {};
+  }
+
+  ngOnInit() {
+    this.dictionary = this.dic ? this.dic.toJSON() : {};
   }
 
   onSave() {
-    console.log(this.applyForm.value);
     this.dbService.db.dictionary.insert(this.applyForm.value);
-    this.dialogRef.close();
+    this.destroyModal();
+  }
+
+  destroyModal(): void {
+    this.modal.destroy();
   }
 
   onUpdate() {
-    this.dicDoc.update(this.dictionary);
-    this.dialogRef.close();
+    this.dic.update(this.dictionary);
+    this.destroyModal();
   }
 }

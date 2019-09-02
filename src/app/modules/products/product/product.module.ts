@@ -1,5 +1,5 @@
 import { ReactiveFormsModule } from "@angular/forms";
-import { AddDictionaryRoutingModule } from "./product-routing.module";
+import { ProductRoutingModule } from "./product-routing.module";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
@@ -11,7 +11,7 @@ import { ProductComponent } from "./product.component";
   imports: [
     CommonModule,
     MaterialModule,
-    AddDictionaryRoutingModule,
+    ProductRoutingModule,
     ReactiveFormsModule
   ]
 })

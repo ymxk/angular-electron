@@ -1,9 +1,6 @@
-import { MatDialog } from "@angular/material/dialog";
 import { DatabaseService } from "./../../services/database.service";
 import { HttpClient } from "@angular/common/http";
 import { Component, ViewChild, AfterViewInit } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
 import { merge, Observable, of as observableOf } from "rxjs";
 import { catchError, map, startWith, switchMap, tap } from "rxjs/operators";
 import { RxProductDocument } from "../../services/product.service";
@@ -26,18 +23,11 @@ export class ProductsComponent implements AfterViewInit {
   ];
   private products: Observable<RxProductDocument[]>;
   isLoadingResults: boolean;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private dbService: DatabaseService, public dialog: MatDialog) {}
+  constructor(private dbService: DatabaseService) {}
 
   ngAfterViewInit() {
     this.onSearch();
-    this.sort.sortChange.subscribe(s => {
-      let sort = {};
-      sort[s.active] = s.direction;
-      this.onSearch(sort);
-    });
   }
 
   onSearch(sort: any = { createTime: "desc" }) {
@@ -46,6 +36,11 @@ export class ProductsComponent implements AfterViewInit {
       .sort(sort)
       .$.pipe(tap(() => (this.isLoadingResults = false)));
   }
-
-  goAdd() {}
+  search() {
+    console.log("search");
+    return false;
+  }
+  goAdd() {
+    return false;
+  }
 }
