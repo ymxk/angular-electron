@@ -8,6 +8,7 @@ import { DatabaseService } from "../../services/database.service";
 import { MatDialog } from "@angular/material/dialog";
 import { RxDictionaryDocument } from "../../services/dictionary.service";
 import { AlertComponent } from "../../components/alert/alert.component";
+import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 /**
  */
 @Component({
@@ -17,28 +18,33 @@ import { AlertComponent } from "../../components/alert/alert.component";
   providers: [DatabaseService]
 })
 export class DictionariesComponent implements AfterViewInit {
-  displayedColumns: string[] = [
-    "value",
-    "label",
-    "type",
-    "sort",
-    "description",
-    "remarks",
-    "createTime",
-    "operation"
-  ];
-
-  resultsLength = 0;
-  isLoadingResults = true;
-  isRateLimitReached = false;
-
-  private emittedFirst = false;
   private dictionaries: Observable<RxDictionaryDocument[]>;
+  validateForm: FormGroup;
+  controlArray: any[] = [];
+  isCollapse = true;
+  isLoadingResults = true;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  toggleCollapse(): void {
+    this.isCollapse = !this.isCollapse;
+    this.controlArray.forEach((c, index) => {
+      c.show = this.isCollapse ? index < 6 : true;
+    });
+  }
 
-  constructor(private dbService: DatabaseService, public dialog: MatDialog) {}
+  resetForm(): void {
+    this.validateForm.reset();
+  }
+  constructor(
+    private dbService: DatabaseService,
+    public dialog: MatDialog,
+    private fb: FormBuilder
+  ) {
+    this.validateForm = this.fb.group({});
+    for (let i = 0; i < 10; i++) {
+      this.controlArray.push({ index: i, show: i < 6 });
+      this.validateForm.addControl(`field${i}`, new FormControl());
+    }
+  }
 
   goAdd() {
     this.dialog.open(AddDictionaryComponent, {
@@ -59,11 +65,6 @@ export class DictionariesComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.onSearch();
-    this.sort.sortChange.subscribe(s => {
-      let sort = {};
-      sort[s.active] = s.direction;
-      this.onSearch(sort);
-    });
   }
 
   onSearch(sort: any = { createTime: "desc" }) {

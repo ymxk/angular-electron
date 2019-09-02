@@ -1,84 +1,55 @@
-<div class="filter-container">
-  <mat-form-field>
-    <input matInput placeholder="名称" />
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="类型" />
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="值" />
-  </mat-form-field>
-  <button mat-raised-button (click)="onSearch()">
-    搜索
-  </button>
-  <button mat-raised-button (click)="goAdd()">
-    新增
-  </button>
-</div>
-<div class="example-container-table mat-elevation-z8">
-  <div class="example-table-container">
-    <table
-      mat-table
-      [dataSource]="dictionaries | asyncNoZone"
-      class="example-table"
-      matSort
-      matSortActive="created"
-      matSortDisableClear
-      matSortDirection="desc"
-    >
-      <!-- Number Column -->
-      <ng-container matColumnDef="number">
-        <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let row">{{ row.number }}</td>
-      </ng-container>
-      <ng-container matColumnDef="createTime">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          创建时间
-        </th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.createTime | date: "yyyy-MM-dd HH:mm" }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="operation">
-        <th mat-header-cell *matHeaderCellDef>操作</th>
-        <td mat-cell *matCellDef="let row">
-          <a mat-button (click)="goUpdate(row)">编辑</a>
-          <a mat-button (click)="onRemoveConfirm(row)">删除</a>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="remarks">
-        <th mat-header-cell *matHeaderCellDef>备注</th>
-        <td mat-cell *matCellDef="let row">{{ row.remarks }}</td>
-      </ng-container>
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>描述</th>
-        <td mat-cell *matCellDef="let row">{{ row.description }}</td>
-      </ng-container>
-      <ng-container matColumnDef="sort">
-        <th mat-header-cell *matHeaderCellDef>排序</th>
-        <td mat-cell *matCellDef="let row">{{ row.sort }}</td>
-      </ng-container>
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef>类型</th>
-        <td mat-cell *matCellDef="let row">{{ row.type }}</td>
-      </ng-container>
-      <ng-container matColumnDef="label">
-        <th mat-header-cell *matHeaderCellDef>值</th>
-        <td mat-cell *matCellDef="let row">{{ row.label }}</td>
-      </ng-container>
-      <ng-container matColumnDef="value">
-        <th mat-header-cell *matHeaderCellDef>名称</th>
-        <td mat-cell *matCellDef="let row">{{ row.value }}</td>
-      </ng-container>
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>编号</th>
-        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+<form nz-form class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>Field </nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
   </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24" class="search-area">
+      <button nz-button [nzType]="'primary'">Search</button>
+      <button nz-button (click)="resetForm()">Clear</button>
+      <a class="collapse" (click)="toggleCollapse()">
+        Collapse
+        <i nz-icon [nzType]="isCollapse ? 'down' : 'up'"></i>
+      </a>
+    </div>
+  </div>
+</form>
 
-  <mat-paginator [length]="resultsLength" [pageSize]="100"></mat-paginator>
-</div>
+<nz-table #basicTable [nzData]="dictionaries | asyncNoZone" class="search-result-list">
+  <thead>
+    <tr>
+      <th>编号</th>
+      <th>名称</th>
+      <th>值</th>
+      <th>类型</th>
+      <th>排序</th>
+      <th>描述</th>
+      <th>备注</th>
+      <th>创建时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ data.value }}</td>
+      <td>{{ data.label }}</td>
+      <td>{{ data.type }}</td>
+      <td>{{ data.sort }}</td>
+      <td>{{ data.description }}</td>
+      <td>{{ data.remarks }}</td>
+      <td>{{ data.createTime | date: "yyyy-MM-dd HH:mm" }}</td>
+      <td>
+        <a (click)="goUpdate(row)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="onRemoveConfirm(row)">删除</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

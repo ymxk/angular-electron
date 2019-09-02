@@ -6,6 +6,7 @@ import { DictionariesComponent } from "./dictionaries.component";
 import { MaterialModule } from "../../material.module";
 import { PipesModule } from "../../pipes/pipes.module";
 import { ComponentsModule } from "../../components/components.module";
+import { NgZorroAntdModule } from "ng-zorro-antd";
 
 @NgModule({
   declarations: [DictionariesComponent],
@@ -14,7 +15,8 @@ import { ComponentsModule } from "../../components/components.module";
     MaterialModule,
     DictionariesRoutingModule,
     PipesModule,
-    ComponentsModule
+    ComponentsModule,
+    NgZorroAntdModule
   ]
 })
 export class DictionariesModule {}

@@ -35,6 +35,7 @@ import {
 } from "@angular/common";
 import { PipesModule } from "./pipes/pipes.module";
 import { ComponentsModule } from "./components/components.module";
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,6 +60,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatNativeDateModule,
     MaterialModule,
     PipesModule,
+     /** 导入 ng-zorro-antd 模块 **/
+     NgZorroAntdModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -68,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
+    { provide: NZ_I18N, useValue: zh_CN },
     {
       provide: APP_INITIALIZER,
       useFactory: () => initDatabase,
