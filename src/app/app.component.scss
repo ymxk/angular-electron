@@ -1,38 +1,34 @@
-.example-container {
-  position: absolute;
-  top: 60px;
-  bottom: 60px;
-  left: 0;
-  right: 0;
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 30px 16px 0;
+  float: left;
 }
 
-.example-sidenav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 300px;
-  background: rgba(255, 255, 255, 0.5);
+.header-menu {
+  line-height: 64px;
 }
 
-.example-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+[nz-menu] {
+  height: calc(100vh - 64px);
 }
 
-.e-content {
-  padding: 20px 20px 20px 0;
+.sider-menu {
+  height: 100%;
+  border-right: 0;
 }
 
-.example-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.inner-layout {
+  padding: 0;
 }
 
-.c-m-btn {
-  width: 100%;
-  text-align: left;
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+nz-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
 }

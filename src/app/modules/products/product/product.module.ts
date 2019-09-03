@@ -3,16 +3,18 @@ import { ProductRoutingModule } from "./product-routing.module";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { MaterialModule } from "../../../material.module";
 import { ProductComponent } from "./product.component";
+import { NgZorroAntdModule } from "ng-zorro-antd";
+import { PipesModule } from "../../../pipes/pipes.module";
 
 @NgModule({
   declarations: [ProductComponent],
   imports: [
     CommonModule,
-    MaterialModule,
     ProductRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgZorroAntdModule,
+    PipesModule
   ]
 })
 export class ProductModule {}

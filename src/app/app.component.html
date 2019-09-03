@@ -1,69 +1,41 @@
-<ng-container>
-  <mat-toolbar class="example-header">
-    <button mat-icon-button (click)="sidenav.toggle()">
-      <i class="material-icons">
-        menu
-      </i>
-    </button>
-  </mat-toolbar>
-  <mat-sidenav-container class="example-container">
-    <mat-sidenav
-      #sidenav
-      mode="side"
-      opened
-      class="example-sidenav"
-      [fixedInViewport]="options.value.fixed"
-      [fixedTopGap]="options.value.top"
-      [fixedBottomGap]="options.value.bottom"
+<nz-layout>
+  <nz-header>
+    <div class="logo"></div>
+  </nz-header>
+  <nz-layout>
+    <nz-sider
+      nzCollapsible
+      [(nzCollapsed)]="isCollapsed"
+      nzWidth="200px"
+      nzTheme="light"
     >
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              商品管理
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-list>
-            <mat-list-item>
-              <button class="c-m-btn" mat-button routerLink="/products">
-                <i class="material-icons">
-                  poll
-                </i>
-                商品管理
-              </button>
-            </mat-list-item>
-            <mat-list-item>
-              <button class="c-m-btn" mat-button routerLink="/home">
-                <i class="material-icons">
-                  print
-                </i>
-                打印
-              </button>
-            </mat-list-item>
-          </mat-list>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              系统管理
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-list>
-            <mat-list-item>
-              <button class="c-m-btn" mat-button routerLink="/dictionaries">
-                <i class="material-icons">
-                  poll
-                </i>
-                字典管理
-              </button>
-            </mat-list-item>
-          </mat-list>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-sidenav>
-    <mat-sidenav-content class="e-content">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  <mat-toolbar class="example-footer">Footer</mat-toolbar>
-</ng-container>
+      <ul
+        nz-menu
+        nzMode="inline"
+        nzTheme="light"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        <li nz-submenu nzTitle="商品管理" nzIcon="appstore">
+          <ul>
+            <li nz-menu-item>
+              <a routerLink="/products">商品管理</a>
+            </li>
+            <li nz-menu-item>打印</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="系统管理" nzIcon="setting">
+          <ul>
+            <li nz-menu-item>
+              <a routerLink="/dictionaries">字典管理</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout class="inner-layout">
+      <!-- <nz-breadcrumb [nzAutoGenerate]="true"> </nz-breadcrumb> -->
+      <nz-content><router-outlet></router-outlet></nz-content>
+      <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

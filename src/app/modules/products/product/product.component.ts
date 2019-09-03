@@ -13,12 +13,11 @@ import { RxDictionaryDocument } from "../../../services/dictionary.service";
 export class ProductComponent extends AddDictionaryValidator
   implements AfterViewInit {
   ngAfterViewInit() {}
-  dictionary: any;
+  product: any = {};
   public dicDoc: RxDictionaryDocument;
   constructor(private dbService: DatabaseService, fb: FormBuilder) {
     super(fb);
     this.createFromGroup();
-    // this.dictionary = dicDoc ? dicDoc.toJSON() : {};
   }
 
   onSave() {
@@ -27,6 +26,6 @@ export class ProductComponent extends AddDictionaryValidator
   }
 
   onUpdate() {
-    this.dicDoc.update(this.dictionary);
+    this.dicDoc.update(this.product);
   }
 }

@@ -11,42 +11,44 @@ export class AddDictionaryValidator {
 
   createFromGroup() {
     this.applyForm = this.fb.group({
-      value: new FormControl("", [
+      upc: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+      productName: new FormControl("", [
         Validators.required,
         Validators.maxLength(50)
       ]),
-      label: new FormControl("", [Validators.maxLength(50)]),
-      type: new FormControl("", [Validators.maxLength(50)]),
-      description: new FormControl("", [Validators.maxLength(50)]),
-      sort: new FormControl(0, [Validators.min(0)]),
-      remarks: new FormControl("", [Validators.maxLength(50)])
+      productDescription: new FormControl("", [Validators.maxLength(50)]),
+      quantityPerUnit: new FormControl(0, [
+        Validators.required,
+        Validators.min(0)
+      ]),
+      units: new FormControl(0, [Validators.required, Validators.min(0)]),
+      exp: new FormControl(0, [Validators.required]),
+      unitSize: new FormControl(0, [Validators.required, Validators.min(0)]),
+      unitPrice: new FormControl(0, [Validators.required, Validators.min(0)])
     });
   }
-  get id() {
-    return this.applyForm.get("id");
+  get upc() {
+    return this.applyForm.get("upc");
   }
-  get value() {
-    return this.applyForm.get("value");
+  get productName() {
+    return this.applyForm.get("productName");
   }
-  get label() {
-    return this.applyForm.get("label");
+  get productDescription() {
+    return this.applyForm.get("productDescription");
   }
-  get type() {
-    return this.applyForm.get("type");
+  get quantityPerUnit() {
+    return this.applyForm.get("quantityPerUnit");
   }
-  get description() {
-    return this.applyForm.get("description");
+  get unitSize() {
+    return this.applyForm.get("unitSize");
   }
-  get sort() {
-    return this.applyForm.get("sort");
+  get unitPrice() {
+    return this.applyForm.get("unitPrice");
   }
-  get remarks() {
-    return this.applyForm.get("remarks");
+  get exp() {
+    return this.applyForm.get("exp");
   }
-  get createTime() {
-    return this.applyForm.get("createTime");
-  }
-  get lastUpdateTime() {
-    return this.applyForm.get("lastUpdateTime");
+  get units() {
+    return this.applyForm.get("units");
   }
 }

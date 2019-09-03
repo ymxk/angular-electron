@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 export class AppComponent {
   options: FormGroup;
   panelOpenState = false;
+  mode = false;
+  dark = false;
   constructor(
     public electronService: ElectronService,
     private translate: TranslateService,

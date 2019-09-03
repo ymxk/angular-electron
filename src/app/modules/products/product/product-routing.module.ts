@@ -6,7 +6,10 @@ import { ProductComponent } from "./product.component";
 const routes: Routes = [
   {
     path: "product",
-    component: ProductComponent
+    component: ProductComponent,
+    data: {
+      breadcrumb: "新增商品"
+    }
   }
 ];
 
