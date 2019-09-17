@@ -1,9 +1,8 @@
-import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { Validators } from "@angular/forms";
 import { FormGroup, FormControl } from "@angular/forms";
 
-export class AddDictionaryValidator {
+export class AddProductValidator {
   applyForm: FormGroup;
   constructor(public fb: FormBuilder) {
     this.createFromGroup();

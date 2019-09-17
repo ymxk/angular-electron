@@ -1,15 +1,12 @@
 import { AddDictionaryComponent } from "./add-dictionary/add-dictionary.component";
-import { Component, ViewChild, AfterViewInit } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
+import { Component, AfterViewInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { DatabaseService } from "../../services/database.service";
-import { MatDialog } from "@angular/material/dialog";
 import { RxDictionaryDocument } from "../../services/dictionary.service";
-import { AlertComponent } from "../../components/alert/alert.component";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd";
+import { Pageable } from "../../model/pageable";
 /**
  */
 @Component({
@@ -19,12 +16,18 @@ import { NzModalService } from "ng-zorro-antd";
   providers: [DatabaseService]
 })
 export class DictionariesComponent implements AfterViewInit {
-  private dictionaries: Observable<RxDictionaryDocument[]>;
+  dictionaries: Observable<RxDictionaryDocument[]>;
   validateForm: FormGroup;
   controlArray: any[] = [];
   isCollapse = true;
-  isLoadingResults = true;
-
+  loading = true;
+  pageable: Pageable = new Pageable();
+  params = {
+    label: "",
+    value: "",
+    description: "",
+    type: ""
+  };
   toggleCollapse(): void {
     this.isCollapse = !this.isCollapse;
   }
@@ -34,15 +37,22 @@ export class DictionariesComponent implements AfterViewInit {
   }
   constructor(
     private dbService: DatabaseService,
-    private modalService: NzModalService,
-    public dialog: MatDialog,
-    private fb: FormBuilder
+    private modalService: NzModalService
   ) {}
 
   goAdd() {
     this.modalService.create({
       nzTitle: "新增",
       nzContent: AddDictionaryComponent
+    });
+    return false;
+  }
+
+  onAddBy(dic: RxDictionaryDocument) {
+    this.modalService.create({
+      nzTitle: "新增",
+      nzContent: AddDictionaryComponent,
+      nzComponentParams: { dic: dic, addExist: true }
     });
     return false;
   }
@@ -57,24 +67,42 @@ export class DictionariesComponent implements AfterViewInit {
     return false;
   }
 
-  onRemoveConfirm(dic: RxDictionaryDocument) {
-    dic.remove();
+  onRemoveConfirm(doc: RxDictionaryDocument) {
+    this.modalService.confirm({
+      nzTitle: "提示",
+      nzContent: `<b style="color: red;">确认删除此数据</b>`,
+      nzOkType: "danger",
+      nzOnOk: () => doc.remove()
+    });
   }
 
   ngAfterViewInit() {
-    this.onSearch();
+    this.onSearch(true);
   }
 
-  search() {
-    console.log("search");
-    return false;
-  }
-
-  onSearch(sort: any = { createTime: "desc" }) {
-    this.dictionaries = this.dbService.db.dictionary
+  onSearch(
+    reset: boolean = false,
+    pageable: Pageable = this.pageable,
+    sort: any = { createTime: "desc" }
+  ) {
+    this.loading = true;
+    if (reset) this.pageable.pageIndex = 1;
+    const dic = this.dbService.db.dictionary;
+    dic
       .find()
+      .exec()
+      .then(data => (pageable.total = data.length));
+    this.dictionaries = dic
+      .find({
+        label: { $regex: `${this.params.label}` },
+        value: { $regex: `${this.params.value}` },
+        description: { $regex: `${this.params.description}` },
+        type: { $regex: `${this.params.type}` }
+      })
       .sort(sort)
-      .$.pipe(tap(() => (this.isLoadingResults = false)));
-    this.isLoadingResults = false;
+      .skip(pageable.skip())
+      .limit(pageable.pageSize)
+      .$.pipe(tap(() => (this.loading = false)));
+    return false;
   }
 }

@@ -2,34 +2,18 @@
   <div class="e-container">
     <nz-form-item>
       <nz-form-label [nzSpan]="4">名称</nz-form-label>
-      <nz-form-control [nzSpan]="14" nzHasFeedback [nzErrorTip]="valueErrorTpl">
+      <nz-form-control [nzSpan]="16" nzHasFeedback [nzErrorTip]="labelErrorTpl">
         <input
           nz-input
           placeholder="名称"
-          [(ngModel)]="dictionary.value"
-          formControlName="value"
-          required
-        />
-        <ng-template #valueErrorTpl let-control>
-          <ng-container *ngIf="value.errors.required">
-            请输入
-          </ng-container>
-          <ng-container *ngIf="value.errors.maxlength">
-            最多输入50字
-          </ng-container>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4">值</nz-form-label>
-      <nz-form-control nzHasFeedback [nzErrorTip]="labelErrorTpl" [nzSpan]="14">
-        <input
-          nz-input
-          placeholder="值"
           [(ngModel)]="dictionary.label"
           formControlName="label"
+          required
         />
         <ng-template #labelErrorTpl let-control>
+          <ng-container *ngIf="label.errors.required">
+            请输入
+          </ng-container>
           <ng-container *ngIf="label.errors.maxlength">
             最多输入50字
           </ng-container>
@@ -37,8 +21,24 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
+      <nz-form-label [nzSpan]="4">值</nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="valueErrorTpl" [nzSpan]="16">
+        <input
+          nz-input
+          placeholder="值"
+          [(ngModel)]="dictionary.value"
+          formControlName="value"
+        />
+        <ng-template #valueErrorTpl let-control>
+          <ng-container *ngIf="value.errors.maxlength">
+            最多输入50字
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-label [nzSpan]="4">类型</nz-form-label>
-      <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl" [nzSpan]="14">
+      <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl" [nzSpan]="16">
         <input
           nz-input
           placeholder="类型"
@@ -54,7 +54,7 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="4">排序</nz-form-label>
-      <nz-form-control nzHasFeedback [nzErrorTip]="sortErrorTpl" [nzSpan]="14">
+      <nz-form-control nzHasFeedback [nzErrorTip]="sortErrorTpl" [nzSpan]="16">
         <input
           nz-input
           type="number"
@@ -75,7 +75,7 @@
       <nz-form-control
         nzHasFeedback
         [nzErrorTip]="descriptionErrorTpl"
-        [nzSpan]="14"
+        [nzSpan]="16"
       >
         <input
           nz-input
@@ -95,7 +95,7 @@
       <nz-form-control
         nzHasFeedback
         [nzErrorTip]="remarksErrorTpl"
-        [nzSpan]="14"
+        [nzSpan]="16"
       >
         <textarea
           nz-input

@@ -14,6 +14,7 @@ export class AppComponent {
   panelOpenState = false;
   mode = false;
   dark = false;
+  isCollapsed = false;
   constructor(
     public electronService: ElectronService,
     private translate: TranslateService,

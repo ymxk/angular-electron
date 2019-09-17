@@ -1,0 +1,158 @@
+<div id="print">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>录单日期</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>发货仓库</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>单据编号</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>购买单位</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>摘要</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>经手人</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</div>
+<nz-table
+  #colSpanTable
+  [nzData]="orders"
+  nzBordered
+  nzShowPagination="false"
+  nzFrontPagination="false"
+  nzSize="small"
+>
+  <thead>
+    <tr>
+      <th>编号</th>
+      <th>商品编号</th>
+      <th>存货名称</th>
+      <th>规格</th>
+      <th>单位</th>
+      <th>数量</th>
+      <th>单价</th>
+      <th>金额</th>
+      <th>辅助数量</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of colSpanTable.data; index as i">
+      <td>{{ i + 1 }}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">合计</td>
+      <td colspan="2"></td>
+      <td colspan="2" style="text-align: right;">1778</td>
+      <td></td>
+      <td>2839.55</td>
+      <td>31</td>
+      <td></td>
+    </tr>
+  </tbody>
+</nz-table>
+<div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>收款账户</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>收款金额</nz-form-label>
+        <nz-form-control>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item nzFlex>
+        <nz-form-label>合计</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="4">
+      <nz-form-item nzFlex>
+        <nz-form-label>发货</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <nz-form-item nzFlex>
+        <nz-form-label>送货</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <nz-form-item nzFlex>
+        <nz-form-label>收货</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item nzFlex>
+        <nz-form-label>制单人</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <nz-form-item nzFlex>
+        <nz-form-label>复核</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label>公司地址</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label>联系电话</nz-form-label>
+        <nz-form-control> </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</div>
+<button nz-button (click)="print()" nzType="primary">打印</button>

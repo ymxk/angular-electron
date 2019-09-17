@@ -6,7 +6,7 @@ const productSchema: RxJsonSchema = {
   keyCompression: false,
   type: "object",
   properties: {
-    productId: {
+    id: {
       type: "string",
       default: ""
     },
@@ -33,6 +33,14 @@ const productSchema: RxJsonSchema = {
     unitPrice: {
       type: "string",
       default: ""
+    },
+    units: {
+      type: "string",
+      default: ""
+    },
+    exp: {
+      type: "number",
+      index: true
     },
     createTime: {
       type: "number",

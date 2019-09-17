@@ -11,11 +11,11 @@ export class AddDictionaryValidator {
 
   createFromGroup() {
     this.applyForm = this.fb.group({
-      value: new FormControl("", [
+      label: new FormControl("", [
         Validators.required,
         Validators.maxLength(50)
       ]),
-      label: new FormControl("", [Validators.maxLength(50)]),
+      value: new FormControl("", [Validators.maxLength(50)]),
       type: new FormControl("", [Validators.maxLength(50)]),
       description: new FormControl("", [Validators.maxLength(50)]),
       sort: new FormControl(0, [Validators.min(0)]),

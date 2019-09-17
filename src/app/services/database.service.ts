@@ -23,7 +23,7 @@ if (false) {
 import RxDBValidateModule from "rxdb/plugins/validate";
 RxDB.plugin(RxDBValidateModule);
 
-import RxDBUpdateModule from 'rxdb/plugins/update';
+import RxDBUpdateModule from "rxdb/plugins/update";
 RxDB.plugin(RxDBUpdateModule);
 
 import RxDBLeaderElectionModule from "rxdb/plugins/leader-election";
@@ -34,6 +34,9 @@ RxDB.plugin(RxDBReplicationModule);
 // always needed for replication with the node-server
 import * as PouchdbAdapterHttp from "pouchdb-adapter-http";
 RxDB.plugin(PouchdbAdapterHttp);
+
+import JsonDumpPlugin from 'rxdb/plugins/json-dump';
+RxDB.plugin(JsonDumpPlugin);
 
 import * as PouchdbAdapterIdb from "pouchdb-adapter-idb";
 import { storesCollections } from "./stores-collections";
@@ -80,7 +83,6 @@ async function _create(): Promise<RxMyDatabase> {
     docData.id = uuidv5("dictionary", uuidv5.DNS);
     docData.createTime = Date.now();
     docData.lastUpdateTime = Date.now();
-    console.log(docData);
   },
   false);
 

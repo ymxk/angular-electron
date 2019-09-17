@@ -16,6 +16,7 @@ export class AddDictionaryComponent extends AddDictionaryValidator
   ngAfterViewInit() {}
   dictionary: any = {};
   @Input() dic: RxDictionaryDocument;
+  @Input() addExist: boolean;
   constructor(
     private modal: NzModalRef,
     private dbService: DatabaseService,
@@ -26,7 +27,11 @@ export class AddDictionaryComponent extends AddDictionaryValidator
   }
 
   ngOnInit() {
-    this.dictionary = this.dic ? this.dic.toJSON() : {};
+    if (this.addExist) {
+      this.dictionary = this.dic ? { type: this.dic.toJSON().type } : {};
+    } else {
+      this.dictionary = this.dic ? this.dic.toJSON() : {};
+    }
   }
 
   onSave() {

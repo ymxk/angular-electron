@@ -20,13 +20,18 @@
             <li nz-menu-item>
               <a routerLink="/products">商品管理</a>
             </li>
-            <li nz-menu-item>打印</li>
+            <li nz-menu-item>
+              <a routerLink="/print-sales-slip">打印销售单</a>
+            </li>
           </ul>
         </li>
         <li nz-submenu nzTitle="系统管理" nzIcon="setting">
           <ul>
             <li nz-menu-item>
               <a routerLink="/dictionaries">字典管理</a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/backup">数据备份</a>
             </li>
           </ul>
         </li>
@@ -35,7 +40,7 @@
     <nz-layout class="inner-layout">
       <!-- <nz-breadcrumb [nzAutoGenerate]="true"> </nz-breadcrumb> -->
       <nz-content><router-outlet></router-outlet></nz-content>
-      <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+      <nz-footer>Keno Design ©2019</nz-footer>
     </nz-layout>
   </nz-layout>
 </nz-layout>

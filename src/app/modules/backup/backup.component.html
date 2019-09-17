@@ -1,0 +1,65 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <a><i nz-icon nzType="setting"></i><span>系统管理</span></a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <span>数据备份</span>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<div nz-row>
+  <div nz-col [nzSpan]="24" class="search-area">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="download()"
+      [nzLoading]="isLoadingDownload"
+    >
+      <i nz-icon nzType="download"></i><span>下载</span>
+    </button>
+    <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
+      <button nz-button nzType="primary">
+        <i nz-icon nzType="upload"></i><span>导入</span>
+      </button>
+    </nz-upload>
+    <button
+      nz-button
+      nzType="danger"
+      (click)="removeConfirm()"
+      [nzLoading]="isLoadingRemove"
+    >
+      <i nz-icon nzType="rest" nzTheme="outline"></i><span>清空库</span>
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="cloudUp()"
+      [nzLoading]="isLoadingCloudUp"
+    >
+      <i nz-icon nzType="cloud"></i><span>云备份</span>
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="cloudDownload()"
+      [nzLoading]="isLoadingCloudDownload"
+    >
+      <i nz-icon nzType="cloud-download"></i><span>云同步</span>
+    </button>
+  </div>
+</div>
+<ng-template [ngIf]="dbData" [ngIfElse]="loading">
+  <nz-descriptions nzTitle="数据库仪表">
+    <nz-descriptions-item
+      [nzTitle]="s.name"
+      *ngFor="let s of dbData.collections"
+    >
+      {{ s.docs.length }} / 条
+    </nz-descriptions-item>
+  </nz-descriptions>
+</ng-template>
+<ng-template #loading>
+  <nz-empty></nz-empty>
+</ng-template>

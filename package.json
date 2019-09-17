@@ -1,5 +1,5 @@
 {
-  "name": "angular-electron",
+  "name": "erp-se",
   "version": "6.1.0",
   "description": "Angular 8 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/maximegris/angular-electron",
@@ -47,8 +47,8 @@
     "@angular/core": "8.2.2",
     "@angular/forms": "8.2.2",
     "@angular/language-service": "8.2.2",
-    "@angular/platform-browser": "8.2.2",
     "@angular/material-moment-adapter": "8.1.4",
+    "@angular/platform-browser": "8.2.2",
     "@angular/platform-browser-dynamic": "8.2.2",
     "@angular/router": "8.2.2",
     "@ngx-translate/core": "11.0.1",
@@ -57,6 +57,7 @@
     "@types/jasminewd2": "2.0.6",
     "@types/mocha": "5.2.7",
     "@types/node": "12.6.8",
+    "art-template-loader": "^1.4.3",
     "chai": "4.2.0",
     "codelyzer": "5.1.0",
     "conventional-changelog-cli": "2.0.21",
@@ -90,13 +91,20 @@
     "@angular/cdk": "^8.1.4",
     "@angular/material": "^8.1.4",
     "@babel/polyfill": "^7.4.4",
+    "art-template": "^4.13.2",
+    "electron-log": "^3.0.0",
     "material-design-icons": "^3.0.1",
+    "moment": "^2.24.0",
     "ng-zorro-antd": "^8.2.1",
     "pouchdb-adapter-http": "7.0.0",
     "pouchdb-adapter-idb": "^7.1.1",
     "pouchdb-replication": "7.0.0",
+    "print-js": "^1.0.61",
     "process": "^0.11.10",
     "rxdb": "^8.3.0",
     "uuid": "^3.3.3"
+  },
+  "config": {
+    "electron_webpack": "./webpack.config.js"
   }
 }

@@ -33,12 +33,11 @@ import {
   LocationStrategy,
   PathLocationStrategy
 } from "@angular/common";
-import { PipesModule } from "./pipes/pipes.module";
 import { ComponentsModule } from "./components/components.module";
-import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from "ng-zorro-antd";
 
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
+import { registerLocaleData } from "@angular/common";
+import zh from "@angular/common/locales/zh";
 registerLocaleData(zh);
 
 // AoT requires an exported function for factories
@@ -63,10 +62,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MatNativeDateModule,
     MaterialModule,
-    PipesModule,
     NgZorroAntdModule,
-     /** 导入 ng-zorro-antd 模块 **/
-     NgZorroAntdModule,
+    /** 导入 ng-zorro-antd 模块 **/
+    NgZorroAntdModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -1,15 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
-import { ProductComponent } from "./product.component";
+import { PrintSalesSlipPreviewComponent } from "./print-sales-slip-preview.component";
 
 const routes: Routes = [
   {
-    path: "product/:id",
-    component: ProductComponent,
-    data: {
-      breadcrumb: "新增商品"
-    }
+    path: "print-sales-slip-preview",
+    component: PrintSalesSlipPreviewComponent
   }
 ];
 
@@ -18,4 +15,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProductRoutingModule {}
+export class PrintSalesSlipPreviewRoutingModule {}

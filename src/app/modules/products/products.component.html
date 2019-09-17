@@ -3,7 +3,7 @@
     <i nz-icon nzType="home"></i>
   </nz-breadcrumb-item>
   <nz-breadcrumb-item>
-    <a><i nz-icon nzType="appstore"></i><span>商品管理</span></a>
+    <i nz-icon nzType="appstore"></i><span>商品管理</span>
   </nz-breadcrumb-item>
   <nz-breadcrumb-item>
     <span>商品管理</span>
@@ -41,7 +41,7 @@
       <button nz-button nzType="primary" (click)="search()">
         <i nz-icon nzType="search"></i>搜索
       </button>
-      <button nz-button routerLink="/product">
+      <button nz-button [routerLink]="['/product', '']">
         <i nz-icon nzType="plus"></i>新增
       </button>
     </div>
@@ -59,7 +59,7 @@
       <th>商品编号</th>
       <th>存货名称</th>
       <th>规格</th>
-      <th>单位</th>
+      <th>价格</th>
       <th>创建时间</th>
       <th>操作</th>
     </tr>
@@ -70,10 +70,10 @@
       <td>{{ data.upc }}</td>
       <td>{{ data.productName }}</td>
       <td>{{ data.unitSize }}</td>
-      <td>{{ data.unitPrice }}</td>
+      <td>{{ data.unitPrice | currency: "RMB" }}</td>
       <td>{{ data.createTime | date: "yyyy-MM-dd HH:mm" }}</td>
       <td>
-        <a (click)="goUpdate(data)">编辑</a>
+        <a [routerLink]="['/product', data.id]">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>
         <a (click)="onRemoveConfirm(data)">删除</a>
       </td>

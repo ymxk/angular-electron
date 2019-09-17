@@ -9,7 +9,7 @@
     <span>新增商品</span>
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<form nz-form [nzLayout]="'horizontal'" [formGroup]="applyForm">
+<form nz-form *ngIf="product" [nzLayout]="'horizontal'" [formGroup]="applyForm">
   <div class="e-container">
     <nz-form-item>
       <nz-form-label [nzSpan]="3" nzRequired>商品编号</nz-form-label>
@@ -83,11 +83,9 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="3" nzRequired>单位</nz-form-label>
       <nz-form-control [nzSpan]="10" nzHasFeedback [nzErrorTip]="unitsErrorTpl">
-        {{ product.units }}
         <nz-select
           [(ngModel)]="product.units"
           formControlName="units"
-          required
           style="width: 200px;"
           nzShowSearch
           nzAllowClear
@@ -95,8 +93,8 @@
         >
           <nz-option
             *ngFor="let o of 'units' | dic | asyncNoZone"
-            [nzLabel]="o.value"
-            [nzValue]="o.lable"
+            [nzLabel]="o.label"
+            [nzValue]="o.value"
           >
           </nz-option>
         </nz-select>
@@ -117,13 +115,15 @@
         nzHasFeedback
         [nzErrorTip]="unitPriceErrorTpl"
       >
-        <input
-          nz-input
-          placeholder="单价"
-          [(ngModel)]="product.unitPrice"
-          formControlName="unitPrice"
-          required
-        />
+        <nz-input-group nzAddOnBefore="￥">
+          <input
+            nz-input
+            placeholder="单价"
+            [(ngModel)]="product.unitPrice"
+            formControlName="unitPrice"
+            required
+          />
+        </nz-input-group>
         <ng-template #unitPriceErrorTpl let-control>
           <ng-container *ngIf="unitPrice.errors.required">
             请输入
@@ -203,9 +203,26 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-control [nzOffset]="3" [nzSpan]="10">
-        <button nz-button nzType="primary" [disabled]="!applyForm.valid">
-          保存
-        </button>
+        <ng-template [ngIf]="product && product.id" [ngIfElse]="elseBlock">
+          <button
+            nz-button
+            nzType="primary"
+            (click)="onUpdate()"
+            [disabled]="!applyForm.valid"
+          >
+            更新
+          </button>
+        </ng-template>
+        <ng-template #elseBlock>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="onSave()"
+            [disabled]="!applyForm.valid"
+          >
+            保存
+          </button>
+        </ng-template>
         <button nz-button routerLink="/products">返回</button>
       </nz-form-control>
     </nz-form-item>

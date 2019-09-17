@@ -1,0 +1,289 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="appstore"></i><span>商品管理</span>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    <span>打印销售单</span>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+<div id="print" style="display: none;">
+  <section class="flex-c">
+    <div>
+      <label>录单日期: </label><span>{{ saleSlip.createTime }}</span>
+    </div>
+    <div>
+      <label>发货仓库: </label><span>{{ saleSlip.shippingWh }}</span>
+    </div>
+    <div>
+      <label>单据编号: </label><span>{{ saleSlip.serialNum }}</span>
+    </div>
+    <div>
+      <label>购买单位: </label><span>{{ saleSlip.purchaser }}</span>
+    </div>
+    <div>
+      <label>摘要: </label><span>{{ saleSlip.summary }}</span>
+    </div>
+    <div>
+      <label>经手人: </label><span>{{ saleSlip.handler }}</span>
+    </div>
+  </section>
+  <section class="print-d">
+    <table class="p-table">
+      <tr>
+        <td>编号</td>
+        <td>商品编号</td>
+        <td>存货名称</td>
+        <td>规格</td>
+        <td>单位</td>
+        <td>数量</td>
+        <td>单价</td>
+        <td>金额</td>
+        <td>辅助数量</td>
+      </tr>
+      <tr *ngFor="let data of orders; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ data.upc }}</td>
+        <td>{{ data.productName }}</td>
+        <td>{{ data.unitSize }}</td>
+        <td>{{ "units" | dicBy: data.units | asyncNoZone }}</td>
+        <td>{{ data.quantity }}</td>
+        <td>{{ data.unitPrice }}</td>
+        <td>
+          {{ data.subAmount | currency: "￥" }}
+        </td>
+        <td>{{ data.quantityPerUnit }}</td>
+      </tr>
+      <tr>
+        <td colspan="2">合计：</td>
+        <td colspan="2"></td>
+        <td colspan="2" class="text-r">{{ totalQty }}</td>
+        <td></td>
+        <td class="text-r">{{ amount | currency: "￥" }}</td>
+        <td class="text-l">{{ totalAuxQty }}</td>
+      </tr>
+    </table>
+  </section>
+  <section class="flex-c">
+    <div>
+      <label>收款账户: </label><span>{{ saleSlip.accountsReceivable }}</span>
+    </div>
+    <div>
+      <label>收款金额: </label>
+      <span>{{ amount | currency: "￥" }}</span>
+    </div>
+    <div>
+      <label>合计: </label><span>{{ amount | digitUppercase }}</span>
+    </div>
+  </section>
+  <section class="flex-c five-c">
+    <div>
+      <label>发货: </label><span>{{ saleSlip.sender }}</span>
+    </div>
+    <div>
+      <label>送货: </label><span>{{ saleSlip.deliveryPerson }}</span>
+    </div>
+    <div>
+      <label>收货: </label><span>{{ saleSlip.receiver }}</span>
+    </div>
+    <div>
+      <label>制单人: </label><span>{{ saleSlip.preparedBy }}</span>
+    </div>
+    <div>
+      <label>复核: </label><span>{{ saleSlip.reviewer }}</span>
+    </div>
+  </section>
+  <section class="flex-c two-c">
+    <div>
+      <label>公司地址: </label><span>{{ saleSlip.companyAddress }}</span>
+    </div>
+    <div>
+      <label>联系电话: </label><span>{{ saleSlip.telephone }}</span>
+    </div>
+  </section>
+</div>
+<section class="flex-c">
+  <div>
+    <label>录单日期: </label><span>{{ saleSlip.createTime }}</span>
+  </div>
+  <div>
+    <label>发货仓库: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.shippingWh" />
+  </div>
+  <div>
+    <label>单据编号: </label><span>{{ saleSlip.serialNum }}</span>
+  </div>
+  <div>
+    <label>购买单位: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.purchaser" />
+  </div>
+  <div>
+    <label>摘要: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.summary" />
+  </div>
+  <div>
+    <label>经手人: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.handler" />
+  </div>
+</section>
+<section class="search-area">
+  <nz-select
+    style="width: 400px;"
+    [(ngModel)]="selectedGoods"
+    (nzScrollToBottom)="loadMore()"
+    nzPlaceHolder="选择商品"
+    nzAllowClear
+    nzShowSearch
+    [nzServerSearch]="true"
+    (nzOnSearch)="onSearch($event)"
+    [nzCustomTemplate]="custom"
+  >
+    <nz-option
+      nzCustomContent
+      *ngFor="let o of goodsList | asyncNoZone"
+      [nzValue]="o"
+      [nzLabel]="o.productName"
+    >
+      {{ o.upc }} - {{ o.productName }}
+    </nz-option>
+    <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+      <i nz-icon nzType="loading" class="loading-icon"></i> 加载
+    </nz-option>
+  </nz-select>
+  <ng-template #custom let-selected>
+    <span>{{ selected.nzLabel }}-{{ selected.nzValue.upc }}</span>
+  </ng-template>
+  <button nz-button (click)="addGoods()" nzType="primary">添加商品</button>
+  <button nz-button (click)="print()" nzType="primary">打印</button>
+</section>
+<section class="print-d">
+  <nz-table
+    #colSpanTable
+    [nzData]="orders"
+    nzBordered
+    nzShowPagination="false"
+    nzFrontPagination="false"
+    nzSize="small"
+  >
+    <thead>
+      <tr>
+        <th>编号</th>
+        <th>商品编号</th>
+        <th>存货名称</th>
+        <th>规格</th>
+        <th>单位</th>
+        <th>数量</th>
+        <th>单价</th>
+        <th>金额</th>
+        <th>辅助数量</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of colSpanTable.data; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ data.upc }}</td>
+        <td>{{ data.productName }}</td>
+        <td>{{ data.unitSize }}</td>
+        <td>{{ "units" | dicBy: data.units | asyncNoZone }}</td>
+        <td>
+          <div *ngIf="editId !== data.id; else editTpl">
+            <div>
+              {{ data.quantity }}
+            </div>
+          </div>
+          <ng-template #editTpl>
+            <input
+              type="number"
+              style="width: 60px;"
+              nz-input
+              [(ngModel)]="data.quantity"
+            />
+          </ng-template>
+        </td>
+        <td>{{ data.unitPrice }}</td>
+        <td>
+          {{ data.subAmount | currency: "￥" }}
+        </td>
+        <td>{{ data.quantityPerUnit }}</td>
+        <td>
+          <ng-container *ngIf="editId !== data.id; else saveTpl">
+            <a (click)="startEdit(i, data)">编辑</a>
+          </ng-container>
+          <ng-template #saveTpl>
+            <a (click)="saveEdit(i, data)">保存</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a
+              nz-popconfirm
+              nzTitle="确认取消编辑"
+              (nzOnConfirm)="cancelEdit(i, data)"
+              >取消</a
+            >
+          </ng-template>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="onRemove(data)">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">合计</td>
+        <td colspan="2"></td>
+        <td colspan="2" class="text-r">
+          {{ totalQty }}
+        </td>
+        <td></td>
+        <td>
+          {{ amount | currency: "￥" }}
+        </td>
+        <td>{{ totalAuxQty }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</section>
+<section class="flex-c">
+  <div>
+    <label>收款账户: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.accountsReceivable" />
+  </div>
+  <div>
+    <label>收款金额: </label>
+    <span>{{ amount | currency: "￥" }}</span>
+  </div>
+  <div>
+    <label>合计: </label><span>{{ amount | digitUppercase }}</span>
+  </div>
+</section>
+<section class="flex-c five-c">
+  <div>
+    <label>发货: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.sender" />
+  </div>
+  <div>
+    <label>送货: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.deliveryPerson" />
+  </div>
+  <div>
+    <label>收货: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.receiver" />
+  </div>
+  <div>
+    <label>制单人: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.preparedBy" />
+  </div>
+  <div>
+    <label>复核: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.reviewer" />
+  </div>
+</section>
+<section class="flex-c two-c">
+  <div>
+    <label>公司地址: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.companyAddress" />
+  </div>
+  <div>
+    <label>联系电话: </label>
+    <input type="text" nz-input [(ngModel)]="saleSlip.telephone" />
+  </div>
+</section>

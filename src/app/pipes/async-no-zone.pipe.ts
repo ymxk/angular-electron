@@ -12,7 +12,7 @@ import { AsyncPipe } from "@angular/common";
   name: "asyncNoZone",
   pure: false
 })
-export default class AsyncNoZonePipe extends AsyncPipe {}
+export class AsyncNoZonePipe extends AsyncPipe {}
 // monkeypatch the private method with detectChanges() instead of markForCheck()
 AsyncNoZonePipe.prototype["_updateLatestValue"] = function(
   async: any,
