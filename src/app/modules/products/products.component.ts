@@ -5,6 +5,7 @@ import { merge, Observable, of as observableOf } from "rxjs";
 import { catchError, map, startWith, switchMap, tap } from "rxjs/operators";
 import { RxProductDocument } from "../../services/product.service";
 import { NzModalService } from "ng-zorro-antd";
+import { Pageable } from "../../model/pageable";
 
 /**
  */
@@ -23,7 +24,12 @@ export class ProductsComponent implements OnInit {
     "createTime"
   ];
   products: Observable<RxProductDocument[]>;
-  isLoadingResults: boolean;
+  loading: boolean = true;
+  pageable: Pageable = new Pageable();
+  params = {
+    upc: "",
+    productName: ""
+  };
 
   constructor(
     private dbService: DatabaseService,
@@ -43,15 +49,27 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  onSearch(sort: any = { createTime: "desc" }) {
-    this.products = this.dbService.db.product
+  onSearch(
+    reset: boolean = false,
+    pageable: Pageable = this.pageable,
+    sort: any = { createTime: "desc" }
+  ) {
+    this.loading = true;
+    if (reset) this.pageable.pageIndex = 1;
+    const dic = this.dbService.db.product;
+    dic
       .find()
+      .exec()
+      .then(data => (pageable.total = data.length));
+    this.products = dic
+      .find({
+        upc: { $regex: `${this.params.upc}` },
+        productName: { $regex: `${this.params.productName}` }
+      })
       .sort(sort)
-      .$.pipe(tap(() => (this.isLoadingResults = false)));
-  }
-  search() {
-    console.log("search");
-    this.onSearch();
+      .skip(pageable.skip())
+      .limit(pageable.pageSize)
+      .$.pipe(tap(() => (this.loading = false)));
     return false;
   }
   goUpdate() {

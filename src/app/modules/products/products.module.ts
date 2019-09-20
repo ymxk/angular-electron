@@ -1,3 +1,4 @@
+import { FormsModule } from "@angular/forms";
 import { PipesModule } from "./../../pipes/pipes.module";
 import { ProductsRoutingModule } from "./products-routing.module";
 import { NgModule } from "@angular/core";
@@ -7,6 +8,12 @@ import { NgZorroAntdModule } from "ng-zorro-antd";
 
 @NgModule({
   declarations: [ProductsComponent],
-  imports: [CommonModule, ProductsRoutingModule, PipesModule, NgZorroAntdModule]
+  imports: [
+    FormsModule,
+    CommonModule,
+    ProductsRoutingModule,
+    PipesModule,
+    NgZorroAntdModule
+  ]
 })
 export class ProductsModule {}

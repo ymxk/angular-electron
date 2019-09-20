@@ -1,0 +1,119 @@
+@media print {
+  .flex-c {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .three-c>div {
+    width: 33% !important;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .three-c>div>label {
+    width: 70px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .five-c>div {
+    width: 20% !important;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .five-c>div>label {
+    width: 70px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .five-c>div>input {
+    width: calc(100% - 100px);
+  }
+
+  .two-c>div:first-child {
+    width: 66%;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .two-c>div:last-child {
+    width: 33%;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .two-c>div>label {
+    width: 70px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .two-c>div>input {
+    width: calc(100% - 100px);
+  }
+
+  .label {
+    width: 70px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .flex-c>div {
+    width: 33%;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .flex-c>div>label {
+    width: 70px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .flex-c>div>input {
+    width: calc(100% - 100px);
+  }
+
+  .print-d>table {
+    width: 100%;
+  }
+
+  .text-r {
+    text-align: right !important;
+  }
+
+  .text-l {
+    text-align: left !important;
+  }
+
+  .p-table>tr>td {
+    border: 1px solid;
+    padding: 0 5px;
+  }
+
+  .p-table>tr>td:nth-child(6) {
+    text-align: right;
+  }
+
+  .p-table>tr>td:nth-child(7) {
+    text-align: right;
+  }
+
+  .p-table>tr>td:nth-child(8) {
+    text-align: right;
+  }
+}

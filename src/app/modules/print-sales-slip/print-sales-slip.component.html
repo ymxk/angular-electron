@@ -9,101 +9,107 @@
     <span>打印销售单</span>
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<div id="print" style="display: none;">
-  <section class="flex-c">
-    <div>
-      <label>录单日期: </label><span>{{ saleSlip.createTime }}</span>
+<nz-collapse [nzBordered]="false">
+  <nz-collapse-panel nzHeader="打印预览" [nzActive]="false">
+    <div id="print">
+      <section class="flex-c three-c">
+        <div>
+          <label>录单日期: </label><span>{{ saleSlip.createTime }}</span>
+        </div>
+        <div>
+          <label>发货仓库: </label><span>{{ saleSlip.shippingWh }}</span>
+        </div>
+        <div>
+          <label>单据编号: </label><span>{{ saleSlip.serialNum }}</span>
+        </div>
+        <div>
+          <label>购买单位: </label><span>{{ saleSlip.purchaser }}</span>
+        </div>
+        <div>
+          <label>摘要: </label><span>{{ saleSlip.summary }}</span>
+        </div>
+        <div>
+          <label>经手人: </label><span>{{ saleSlip.handler }}</span>
+        </div>
+      </section>
+      <section class="print-d">
+        <table class="p-table">
+          <tr>
+            <td>编号</td>
+            <td>商品编号</td>
+            <td>存货名称</td>
+            <td>规格</td>
+            <td>单位</td>
+            <td>数量</td>
+            <td>单价</td>
+            <td>金额</td>
+            <td>辅助数量</td>
+          </tr>
+          <tr *ngFor="let data of orders; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ data.upc }}</td>
+            <td>{{ data.productName }}</td>
+            <td>{{ data.unitSize }}</td>
+            <td>{{ "units" | dicBy: data.units | asyncNoZone }}</td>
+            <td>{{ data.quantity }}</td>
+            <td>{{ data.unitPrice }}</td>
+            <td>
+              {{ data.subAmount | currency: "￥" }}
+            </td>
+            <td>{{ data.quantityPerUnit }}</td>
+          </tr>
+          <tr>
+            <td colspan="2">合计：</td>
+            <td colspan="2"></td>
+            <td colspan="2" class="text-r">{{ totalQty }}</td>
+            <td></td>
+            <td class="text-r">{{ amount | currency: "￥" }}</td>
+            <td class="text-l">{{ totalAuxQty }}</td>
+          </tr>
+        </table>
+      </section>
+      <section class="flex-c">
+        <div>
+          <label>收款账户: </label
+          ><span>{{ saleSlip.accountsReceivable }}</span>
+        </div>
+        <div>
+          <label>收款金额: </label>
+          <span>{{ amount | currency: "￥" }}</span>
+        </div>
+        <div>
+          <label>合计: </label><span>{{ amount | digitUppercase }}</span>
+        </div>
+      </section>
+      <section class="flex-c five-c">
+        <div>
+          <label>发货: </label><span>{{ saleSlip.sender }}</span>
+        </div>
+        <div>
+          <label>送货: </label><span>{{ saleSlip.deliveryPerson }}</span>
+        </div>
+        <div>
+          <label>收货: </label><span>{{ saleSlip.receiver }}</span>
+        </div>
+        <div>
+          <label>制单人: </label><span>{{ saleSlip.preparedBy }}</span>
+        </div>
+        <div>
+          <label>复核: </label><span>{{ saleSlip.reviewer }}</span>
+        </div>
+      </section>
+      <section class="flex-c two-c">
+        <div>
+          <label>公司地址: </label><span>{{ saleSlip.companyAddress }}</span>
+        </div>
+        <div>
+          <label>联系电话: </label><span>{{ saleSlip.telephone }}</span>
+        </div>
+      </section>
     </div>
-    <div>
-      <label>发货仓库: </label><span>{{ saleSlip.shippingWh }}</span>
-    </div>
-    <div>
-      <label>单据编号: </label><span>{{ saleSlip.serialNum }}</span>
-    </div>
-    <div>
-      <label>购买单位: </label><span>{{ saleSlip.purchaser }}</span>
-    </div>
-    <div>
-      <label>摘要: </label><span>{{ saleSlip.summary }}</span>
-    </div>
-    <div>
-      <label>经手人: </label><span>{{ saleSlip.handler }}</span>
-    </div>
-  </section>
-  <section class="print-d">
-    <table class="p-table">
-      <tr>
-        <td>编号</td>
-        <td>商品编号</td>
-        <td>存货名称</td>
-        <td>规格</td>
-        <td>单位</td>
-        <td>数量</td>
-        <td>单价</td>
-        <td>金额</td>
-        <td>辅助数量</td>
-      </tr>
-      <tr *ngFor="let data of orders; index as i">
-        <td>{{ i + 1 }}</td>
-        <td>{{ data.upc }}</td>
-        <td>{{ data.productName }}</td>
-        <td>{{ data.unitSize }}</td>
-        <td>{{ "units" | dicBy: data.units | asyncNoZone }}</td>
-        <td>{{ data.quantity }}</td>
-        <td>{{ data.unitPrice }}</td>
-        <td>
-          {{ data.subAmount | currency: "￥" }}
-        </td>
-        <td>{{ data.quantityPerUnit }}</td>
-      </tr>
-      <tr>
-        <td colspan="2">合计：</td>
-        <td colspan="2"></td>
-        <td colspan="2" class="text-r">{{ totalQty }}</td>
-        <td></td>
-        <td class="text-r">{{ amount | currency: "￥" }}</td>
-        <td class="text-l">{{ totalAuxQty }}</td>
-      </tr>
-    </table>
-  </section>
-  <section class="flex-c">
-    <div>
-      <label>收款账户: </label><span>{{ saleSlip.accountsReceivable }}</span>
-    </div>
-    <div>
-      <label>收款金额: </label>
-      <span>{{ amount | currency: "￥" }}</span>
-    </div>
-    <div>
-      <label>合计: </label><span>{{ amount | digitUppercase }}</span>
-    </div>
-  </section>
-  <section class="flex-c five-c">
-    <div>
-      <label>发货: </label><span>{{ saleSlip.sender }}</span>
-    </div>
-    <div>
-      <label>送货: </label><span>{{ saleSlip.deliveryPerson }}</span>
-    </div>
-    <div>
-      <label>收货: </label><span>{{ saleSlip.receiver }}</span>
-    </div>
-    <div>
-      <label>制单人: </label><span>{{ saleSlip.preparedBy }}</span>
-    </div>
-    <div>
-      <label>复核: </label><span>{{ saleSlip.reviewer }}</span>
-    </div>
-  </section>
-  <section class="flex-c two-c">
-    <div>
-      <label>公司地址: </label><span>{{ saleSlip.companyAddress }}</span>
-    </div>
-    <div>
-      <label>联系电话: </label><span>{{ saleSlip.telephone }}</span>
-    </div>
-  </section>
-</div>
+  </nz-collapse-panel>
+</nz-collapse>
+
 <section class="flex-c">
   <div>
     <label>录单日期: </label><span>{{ saleSlip.createTime }}</span>
@@ -155,8 +161,9 @@
   <ng-template #custom let-selected>
     <span>{{ selected.nzLabel }}-{{ selected.nzValue.upc }}</span>
   </ng-template>
-  <button nz-button (click)="addGoods()" nzType="primary">添加商品</button>
-  <button nz-button (click)="print()" nzType="primary">打印</button>
+  <button nz-button (click)="addGoods($event)" nzType="primary">添加商品</button>
+  <button nz-button (click)="onPrint($event)" nzType="primary">打印</button>
+  <button nz-button (click)="getPrinters($event)" nzType="primary">打印机</button>
 </section>
 <section class="print-d">
   <nz-table

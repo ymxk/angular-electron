@@ -1,3 +1,4 @@
+import { PrintersModule } from './printers/printers.module';
 import { PrintSalesSlipPreviewModule } from "./print-sales-slip/preview/print-sales-slip-preview.module";
 import { PrintSalesSlipModule } from "./print-sales-slip/print-sales-slip.module";
 import { BackupModule } from "./backup/backup.module";
@@ -15,7 +16,8 @@ import { ProductModule } from "./products/product/product.module";
     ProductModule,
     BackupModule,
     PrintSalesSlipModule,
-    PrintSalesSlipPreviewModule
+    PrintSalesSlipPreviewModule,
+    PrintersModule
   ]
 })
 export class ModulesModule {}

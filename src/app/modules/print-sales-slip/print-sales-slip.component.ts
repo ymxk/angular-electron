@@ -15,6 +15,7 @@ import { PrintSalesSlipPreviewComponent } from "./preview/print-sales-slip-previ
 import { tap } from "rxjs/operators";
 import * as numeral from "numeral";
 import { SaleSlip } from "../../model/sale-slip";
+import { ipcRenderer, BrowserWindow } from "electron";
 
 @Component({
   selector: "print-sales-slip",
@@ -115,16 +116,28 @@ export class PrintSalesSlipComponent {
     });
   }
 
+  getPrinters(event: Event) {
+    event.stopPropagation();
+    ipcRenderer.send("get-printers");
+  }
+
+  onPrint(event: Event) {
+    event.stopPropagation();
+    console.log("onPrint");
+    ipcRenderer.send("print-to-pdf");
+  }
+
   print() {
-    let printHtml = this.elementRef.nativeElement.querySelector("div");
-    console.dir(printHtml.innerHTML);
-    printJS({
-      printable: printHtml.innerHTML,
-      type: "raw-html",
-      style:
-        ".flex-c{display:flex;flex-flow:row wrap;justify-content:space-around;width:100%;}.five-c > div{width:20%;display:inline-block;height:30px;line-height:30px;}.five-c > div > label{@extend .label;}.two-c > div:first-child{width:66%;display:inline-block;height:30px;line-height:30px;}.two-c > div:last-child{width:33%;display:inline-block;height:30px;line-height:30px;}.two-c > div > label{@extend .label;}.label{width:70px;display:inline-block;text-align:right;padding-right:10px;}.print-h{display:flex;flex-flow:row wrap;justify-content:space-around;width:100%;}.print-h > div{width:33%;display:inline-block;height:30px;line-height:30px;}.print-h > div > label{width:70px;display:inline-block;text-align:right;padding-right:10px;}.print-d > table{width:100%;}.text-r{text-align:right !important;}.text-l{text-align:left !important;}.p-table > tr > td{border:1px solid;padding:0 5px;}.p-table > tr > td:nth-child(6){text-align:right;}.p-table > tr > td:nth-child(7){text-align:right;}.p-table > tr > td:nth-child(8){text-align:right;}"
+    return new Promise((resolve, reject) => {
+      let printHtml = this.elementRef.nativeElement.querySelector("div");
+      printJS({
+        printable: printHtml.innerHTML,
+        type: "raw-html",
+        style:
+          ".flex-c{display:flex;flex-flow:row wrap;justify-content:space-around;width:100%;}.three-c > div{width:33% !important;display:inline-block;height:50px;line-height:50px;}.three-c > div > label{@extend .label;}.five-c > div{width:20% !important;display:inline-block;height:50px;line-height:50px;}.five-c > div > label{@extend .label;}.five-c > div > input{width:calc(100% - 100px);}.two-c > div:first-child{width:66%;display:inline-block;height:50px;line-height:50px;}.two-c > div:last-child{width:33%;display:inline-block;height:50px;line-height:50px;}.two-c > div > label{@extend .label;}.two-c > div > input{width:calc(100% - 100px);}.label{width:70px;display:inline-block;text-align:right;padding-right:10px;}.flex-c > div{width:33%;display:inline-block;height:50px;line-height:50px;}.flex-c > div > label{width:70px;display:inline-block;text-align:right;padding-right:10px;}.flex-c > div > input{width:calc(100% - 100px);}.print-d > table{width:100%;}.text-r{text-align:right !important;}.text-l{text-align:left !important;}.p-table > tr > td{border:1px solid;padding:0 5px;}.p-table > tr > td:nth-child(6){text-align:right;}.p-table > tr > td:nth-child(7){text-align:right;}.p-table > tr > td:nth-child(8){text-align:right;}"
+      });
+      resolve(true);
     });
-    return false;
   }
 
   printPreview() {
@@ -136,7 +149,9 @@ export class PrintSalesSlipComponent {
     return false;
   }
 
-  addGoods() {
+  addGoods(event: Event) {
+    event.stopPropagation();
+    console.log(this.selectedGoods);
     if (!this.selectedGoods) {
       this.message.warning("请选择商品");
       return;

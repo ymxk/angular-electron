@@ -11,34 +11,31 @@
 </nz-breadcrumb>
 <form nz-form class="ant-advanced-search-form">
   <div nz-row [nzGutter]="24">
-    <div nz-col [nzSpan]="8">
+    <div nz-col [nzSpan]="6">
       <nz-form-item nzFlex>
-        <nz-form-label>名称 </nz-form-label>
+        <nz-form-label>商品编号 </nz-form-label>
         <nz-form-control>
-          <input nz-input />
+          <input nz-input type="text" [(ngModel)]="params.upc" name="upc" />
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="8">
+    <div nz-col [nzSpan]="6">
       <nz-form-item nzFlex>
-        <nz-form-label>值 </nz-form-label>
+        <nz-form-label>存货名称 </nz-form-label>
         <nz-form-control>
-          <input nz-input />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-col [nzSpan]="8">
-      <nz-form-item nzFlex>
-        <nz-form-label>类型 </nz-form-label>
-        <nz-form-control>
-          <input nz-input />
+          <input
+            nz-input
+            type="text"
+            [(ngModel)]="params.productName"
+            name="productName"
+          />
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24" class="search-area">
-      <button nz-button nzType="primary" (click)="search()">
+      <button nz-button nzType="primary" (click)="onSearch(true)">
         <i nz-icon nzType="search"></i>搜索
       </button>
       <button nz-button [routerLink]="['/product', '']">
@@ -50,8 +47,16 @@
 
 <nz-table
   #basicTable
+  nzShowSizeChanger
+  [nzFrontPagination]="false"
+  [nzLoading]="loading"
   [nzData]="products | asyncNoZone"
   class="search-result-list"
+  [nzTotal]="pageable.total"
+  [(nzPageIndex)]="pageable.pageIndex"
+  [(nzPageSize)]="pageable.pageSize"
+  (nzPageIndexChange)="onSearch()"
+  (nzPageSizeChange)="onSearch(true)"
 >
   <thead>
     <tr>

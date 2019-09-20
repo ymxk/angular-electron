@@ -24,6 +24,18 @@ nz-page-header {
   width: 100%;
 }
 
+.three-c > div {
+  width: 33% !important;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+}
+
+.three-c > div > label {
+  @extend .label;
+}
+
+
 .five-c > div {
   width: 20% !important;
   display: inline-block;
