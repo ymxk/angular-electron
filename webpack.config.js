@@ -1,12 +1,9 @@
 module.exports = {
   module: {
-    rules: [{
-      test: /\.art$/,
-      loader: "art-template-loader",
-      options: {
-        // art-template options (if necessary)
-        // @see https://github.com/aui/art-template
+    resolve: {
+      alias: {
+        'pouchdb-promise': path.join(__dirname, 'node_modules/pouchdb-promise/lib/index.js')
       }
-    }]
+    }
   }
 }

@@ -161,9 +161,11 @@
   <ng-template #custom let-selected>
     <span>{{ selected.nzLabel }}-{{ selected.nzValue.upc }}</span>
   </ng-template>
-  <button nz-button (click)="addGoods($event)" nzType="primary">添加商品</button>
+  <button nz-button (click)="addGoods($event)" nzType="primary">
+    添加商品
+  </button>
   <button nz-button (click)="onPrint($event)" nzType="primary">打印</button>
-  <button nz-button (click)="getPrinters($event)" nzType="primary">打印机</button>
+  <button nz-button (click)="onSavePdf($event)" nzType="primary">导出</button>
 </section>
 <section class="print-d">
   <nz-table

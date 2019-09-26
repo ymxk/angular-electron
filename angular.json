@@ -137,6 +137,15 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "customWebpackConfig": {
+              "path": "./webpack.config.js",
+              "replaceDuplicatePlugins": true
+            }
+          }
         }
       }
     }

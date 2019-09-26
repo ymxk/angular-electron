@@ -1,4 +1,4 @@
-import { DigitUppercasePipe } from './digit-uppercase.pipe';
+import { DigitUppercasePipe } from "./digit-uppercase.pipe";
 import { TotalAuxQtyPipe } from "./total-aux-qty.pipe";
 import { DatabaseService } from "./../services/database.service";
 import { NgModule } from "@angular/core";
@@ -9,6 +9,8 @@ import { DicByPipe } from "./dic-by.pipe";
 import { TotalQtyPipe } from "./total-qty.pipe";
 import { SaleSlipAmountPipe } from "./sales-slip-amount.pipe";
 import { SaleSlipSubAmountPipe } from "./sales-slip-subamount.pipe";
+import { PrettyPrintPipe } from "./pretty-print.pipe";
+import { IsDefaultPipe } from "./is-default.pipe";
 @NgModule({
   declarations: [
     AsyncNoZonePipe,
@@ -19,7 +21,9 @@ import { SaleSlipSubAmountPipe } from "./sales-slip-subamount.pipe";
     TotalAuxQtyPipe,
     SaleSlipAmountPipe,
     SaleSlipSubAmountPipe,
-    DigitUppercasePipe
+    DigitUppercasePipe,
+    PrettyPrintPipe,
+    IsDefaultPipe
   ],
   providers: [DatabaseService],
   exports: [
@@ -31,7 +35,9 @@ import { SaleSlipSubAmountPipe } from "./sales-slip-subamount.pipe";
     TotalAuxQtyPipe,
     SaleSlipAmountPipe,
     SaleSlipSubAmountPipe,
-    DigitUppercasePipe
+    DigitUppercasePipe,
+    PrettyPrintPipe,
+    IsDefaultPipe
   ]
 })
 export class PipesModule {}

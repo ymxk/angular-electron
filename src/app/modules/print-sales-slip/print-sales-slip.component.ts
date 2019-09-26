@@ -116,28 +116,37 @@ export class PrintSalesSlipComponent {
     });
   }
 
-  getPrinters(event: Event) {
-    event.stopPropagation();
-    ipcRenderer.send("get-printers");
-  }
-
   onPrint(event: Event) {
+    let reqid;
     event.stopPropagation();
-    console.log("onPrint");
-    ipcRenderer.send("print-to-pdf");
+    let printHtml = this.elementRef.nativeElement.querySelector("#print");
+    ipcRenderer.once("print-cancel", (event, arg) => {
+      console.log("print-cancel");
+      this.message.remove(reqid);
+      this.message.error(`打印异常，请检查打印机！`);
+    });
+    ipcRenderer.once("print-succeed", (event, arg) => {
+      console.log("print-succeed");
+      this.message.remove(reqid);
+      this.message.success(`打印完成`);
+    });
+    ipcRenderer.once("print-request", (event, arg) => {
+      console.log("request");
+      ipcRenderer.send("print", "");
+      reqid = this.message.loading("打印中", { nzDuration: 0 }).messageId;
+    });
+    ipcRenderer.send("load-print-win", printHtml.innerHTML);
   }
 
-  print() {
-    return new Promise((resolve, reject) => {
-      let printHtml = this.elementRef.nativeElement.querySelector("div");
-      printJS({
-        printable: printHtml.innerHTML,
-        type: "raw-html",
-        style:
-          ".flex-c{display:flex;flex-flow:row wrap;justify-content:space-around;width:100%;}.three-c > div{width:33% !important;display:inline-block;height:50px;line-height:50px;}.three-c > div > label{@extend .label;}.five-c > div{width:20% !important;display:inline-block;height:50px;line-height:50px;}.five-c > div > label{@extend .label;}.five-c > div > input{width:calc(100% - 100px);}.two-c > div:first-child{width:66%;display:inline-block;height:50px;line-height:50px;}.two-c > div:last-child{width:33%;display:inline-block;height:50px;line-height:50px;}.two-c > div > label{@extend .label;}.two-c > div > input{width:calc(100% - 100px);}.label{width:70px;display:inline-block;text-align:right;padding-right:10px;}.flex-c > div{width:33%;display:inline-block;height:50px;line-height:50px;}.flex-c > div > label{width:70px;display:inline-block;text-align:right;padding-right:10px;}.flex-c > div > input{width:calc(100% - 100px);}.print-d > table{width:100%;}.text-r{text-align:right !important;}.text-l{text-align:left !important;}.p-table > tr > td{border:1px solid;padding:0 5px;}.p-table > tr > td:nth-child(6){text-align:right;}.p-table > tr > td:nth-child(7){text-align:right;}.p-table > tr > td:nth-child(8){text-align:right;}"
-      });
-      resolve(true);
+  onSavePdf(event: Event) {
+    console.log("onSavePdf");
+    event.stopPropagation();
+    let printHtml = this.elementRef.nativeElement.querySelector("#print");
+    ipcRenderer.once("save-pdf-request", (event, arg) => {
+      console.log("save-pdf-request");
+      ipcRenderer.send("save-to-pdf");
     });
+    ipcRenderer.send("load-to-pdf", printHtml.innerHTML);
   }
 
   printPreview() {

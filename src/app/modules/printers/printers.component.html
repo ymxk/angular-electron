@@ -9,7 +9,45 @@
     <span>打印机信息</span>
   </nz-breadcrumb-item>
 </nz-breadcrumb>
-<nz-table #nzTable [nzData]="printers">
+<form nz-form class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label>打印尺寸信息</nz-form-label>
+        <nz-form-control>
+          {{ rectangle | json }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12" class="search-area">
+      <button
+        *ngIf="isVisiblePrintWin; else elseivpw"
+        nz-button
+        (click)="onHidePrintWin()"
+        nzType="primary"
+      >
+        关闭打印框
+      </button>
+      <ng-template #elseivpw>
+        <button nz-button (click)="onShowPrintWin()" nzType="primary">
+          打开打印框
+        </button>
+      </ng-template>
+      <button nz-button (click)="onGetPrinters()" nzType="primary">
+        搜索打印机
+      </button>
+      <button nz-button nzType="primary" (click)="onGetBounds()">
+        打印尺寸
+      </button>
+    </div>
+  </div>
+</form>
+<nz-table
+  #nzTable
+  [nzData]="printers"
+  nzFrontPagination="false"
+  nzShowPagination="false"
+>
   <thead>
     <tr>
       <th nzShowExpand></th>
@@ -22,13 +60,13 @@
   <tbody>
     <ng-template ngFor let-data [ngForOf]="nzTable.data">
       <tr>
-        <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
+        <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.name]"></td>
         <td>{{ data.name }}</td>
         <td>{{ data.description }}</td>
         <td>{{ data.status }}</td>
-        <td>{{ data.isDefault }}</td>
+        <td>{{ data.isDefault | isDefault }}</td>
       </tr>
-      <tr [nzExpand]="mapOfExpandData[data.id]">
+      <tr [nzExpand]="mapOfExpandData[data.name]">
         <td></td>
         <td colspan="4">{{ data.options | json }}</td>
       </tr>

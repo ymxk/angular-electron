@@ -4,12 +4,15 @@ import { Component, AfterViewInit, Inject, Input } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { RxDictionaryDocument } from "../../../services/dictionary.service";
 import { NzModalRef } from "ng-zorro-antd";
+import { PouchDBService } from "../../../services/pouch-db";
+const uuidv4 = require("uuid/v4");
 /**
  */
 @Component({
   selector: "add-dictionary",
   styleUrls: ["add-dictionary.component.scss"],
-  templateUrl: "add-dictionary.component.html"
+  templateUrl: "add-dictionary.component.html",
+  providers: [PouchDBService]
 })
 export class AddDictionaryComponent extends AddDictionaryValidator
   implements AfterViewInit {
@@ -20,6 +23,7 @@ export class AddDictionaryComponent extends AddDictionaryValidator
   constructor(
     private modal: NzModalRef,
     private dbService: DatabaseService,
+    private pouchDBService: PouchDBService,
     fb: FormBuilder
   ) {
     super(fb);

@@ -38,6 +38,7 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from "ng-zorro-antd";
 
 import { registerLocaleData } from "@angular/common";
 import zh from "@angular/common/locales/zh";
+import { PouchDBService, initPouchDB } from "./services/pouch-db";
 registerLocaleData(zh);
 
 // AoT requires an exported function for factories
@@ -82,6 +83,13 @@ export function HttpLoaderFactory(http: HttpClient) {
       deps: []
     },
     DatabaseService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => initPouchDB,
+      multi: true,
+      deps: []
+    },
+    PouchDBService,
     { provide: APP_BASE_HREF, useValue: "/" },
     {
       provide: LocationStrategy,

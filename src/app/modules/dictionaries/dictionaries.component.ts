@@ -7,13 +7,14 @@ import { RxDictionaryDocument } from "../../services/dictionary.service";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd";
 import { Pageable } from "../../model/pageable";
+import { PouchDBService } from "../../services/pouch-db";
 /**
  */
 @Component({
   selector: "dictionaries",
   styleUrls: ["dictionaries.component.scss"],
   templateUrl: "dictionaries.component.html",
-  providers: [DatabaseService]
+  providers: [DatabaseService, PouchDBService]
 })
 export class DictionariesComponent implements AfterViewInit {
   dictionaries: Observable<RxDictionaryDocument[]>;
@@ -37,7 +38,8 @@ export class DictionariesComponent implements AfterViewInit {
   }
   constructor(
     private dbService: DatabaseService,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private pouchDBService: PouchDBService
   ) {}
 
   goAdd() {

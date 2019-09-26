@@ -35,7 +35,7 @@ RxDB.plugin(RxDBReplicationModule);
 import * as PouchdbAdapterHttp from "pouchdb-adapter-http";
 RxDB.plugin(PouchdbAdapterHttp);
 
-import JsonDumpPlugin from 'rxdb/plugins/json-dump';
+import JsonDumpPlugin from "rxdb/plugins/json-dump";
 RxDB.plugin(JsonDumpPlugin);
 
 import * as PouchdbAdapterIdb from "pouchdb-adapter-idb";
@@ -46,7 +46,9 @@ const uuidv5 = require("uuid/v5");
 const useAdapter = "idb";
 
 console.log("hostname: " + window.location.hostname);
-const syncURL = "http://" + window.location.hostname + ":10101/";
+const syncURL =
+  "https://momentebeadyingrallyporn:7ea3381a75ffd23e30f3ac3337795a476771e65d@29687c30-0299-4d0d-b688-ab757ed76402-bluemix.cloudantnosqldb.appdomain.cloud";
+// const syncURL = "http://127.0.0.1:5984";
 
 let doSync = true;
 if (window.location.hash == "#nosync") doSync = false;
@@ -87,10 +89,19 @@ async function _create(): Promise<RxMyDatabase> {
   false);
 
   // sync with server
-  console.log("DatabaseService: sync");
-  //   await db.hero.sync({
-  //     remote: syncURL + "/hero"
-  //   });
+  // console.log(`DatabaseService: sync ${syncURL}/erpdb/"`);
+  // const replicationState = await db.dictionary.sync({
+  //   remote: `${syncURL}`
+  // });
+  // replicationState.change$.subscribe(change => console.log("change", change));
+  // replicationState.docs$.subscribe(docData => console.log("docs", docData));
+  // replicationState.denied$.subscribe(docData => console.log("denied", docData));
+  // replicationState.active$.subscribe(active => console.log("active", active));
+  // replicationState.alive$.subscribe(alive => console.log("alive", alive));
+  // replicationState.complete$.subscribe(completed =>
+  //   console.log("complete", completed)
+  // );
+  // replicationState.error$.subscribe(error => console.log("error", error));
 
   return db;
 }
@@ -98,6 +109,7 @@ async function _create(): Promise<RxMyDatabase> {
 let DB_INSTANCE: RxMyDatabase;
 
 /**
+ * https://momentebeadyingrallyporn:7ea3381a75ffd23e30f3ac3337795a476771e65d@29687c30-0299-4d0d-b688-ab757ed76402-bluemix.cloudantnosqldb.appdomain.cloud/erpdb
  * This is run via APP_INITIALIZER in app.module.ts
  * to ensure the database exists before the angular-app starts up
  */

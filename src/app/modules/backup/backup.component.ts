@@ -2,11 +2,14 @@ import { Component } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import * as moment from "moment";
 import { NzMessageService, NzModalService } from "ng-zorro-antd";
+import { dbconf, dburl } from "../../services/config";
+import { PouchDBService } from "../../services/pouch-db";
 
 @Component({
   selector: "backup",
   styleUrls: ["backup.component.scss"],
-  templateUrl: "backup.component.html"
+  templateUrl: "backup.component.html",
+  providers: [PouchDBService]
 })
 export class BackupComponent {
   isLoadingDownload = false;
@@ -15,9 +18,11 @@ export class BackupComponent {
   isLoadingCloudDownload = false;
   isLoadingRemove = false;
   dbData: any;
+
   constructor(
     private dbService: DatabaseService,
     private message: NzMessageService,
+    private pouchDBService: PouchDBService,
     private modalService: NzModalService
   ) {}
 
@@ -96,16 +101,42 @@ export class BackupComponent {
   }
 
   cloudUp() {
-    this.isLoadingCloudUp = true;
-    setTimeout(() => {
+    try {
+      this.isLoadingCloudUp = true;
+      this.pouchDBService.db.rel.find("dictionary").then(res => {
+        console.log(res);
+      });
+      console.log(this.pouchDBService.db);
+      this.pouchDBService.db.replicate.to(
+        "http://127.0.0.1:5984/erpdb",
+        dbconf.syncOpts,
+        err => {
+          console.log(err);
+          this.message.success(`云备份成功`);
+          this.isLoadingCloudUp = false;
+        }
+      );
+    } catch (error) {
+      console.error(error);
       this.isLoadingCloudUp = false;
-    }, 5000);
+    }
   }
   cloudDownload() {
-    this.isLoadingCloudDownload = true;
-    setTimeout(() => {
+    try {
+      this.isLoadingCloudDownload = true;
+      this.pouchDBService.db.replicate.from(
+        "http://127.0.0.1:5984/erpdb",
+        dbconf.syncOpts,
+        err => {
+          console.log(err);
+          this.message.success(`云同步成功`);
+          this.isLoadingCloudDownload = false;
+        }
+      );
+    } catch (error) {
+      console.error(error);
       this.isLoadingCloudDownload = false;
-    }, 5000);
+    }
   }
 
   exportToJsonFile(jsonData) {
